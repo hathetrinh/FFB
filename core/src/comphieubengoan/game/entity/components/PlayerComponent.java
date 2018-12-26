@@ -3,16 +3,12 @@ package comphieubengoan.game.entity.components;
 import com.badlogic.ashley.core.Component;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.utils.Pool;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 
-@Data
-@NoArgsConstructor
 public class PlayerComponent implements Component, Pool.Poolable {
 
-    private OrthographicCamera cam;
-    private boolean isDead;
-    private int point;
+    public OrthographicCamera cam;
+    public boolean isDead = false;
+    public int point = 0;
 
     @Override
     public void reset() {

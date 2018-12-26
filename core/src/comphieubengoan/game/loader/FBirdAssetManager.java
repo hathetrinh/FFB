@@ -37,7 +37,6 @@ public class FBirdAssetManager implements Disposable {
         }
     }
 
-
     public enum NumberImages {
 
         ZERO(0), ONE(1), TWO(2), THREE(3), FOUR(4), FIVE(5), SIX(6), SEVEN(7), EIGHT(8), NINE(9);
@@ -57,7 +56,7 @@ public class FBirdAssetManager implements Disposable {
 
         RED("red"), YELLOW("yellow"), BLUE("blue");
 
-        private String[] _surfixs = {"bird-upflap", "bird-midflap", "bird-downflap"};
+        private String[] _suffixes = {"bird-upflap", "bird-midflap", "bird-downflap"};
         private String color;
 
         BirdAnimationColor(String color) {
@@ -67,8 +66,8 @@ public class FBirdAssetManager implements Disposable {
         public String[] getSprites() {
             String[] birdSprites = new String[3];
             int i = 0;
-            for (String surfix : _surfixs) {
-                birdSprites[i++] = color + surfix;
+            for (String suffix : _suffixes) {
+                birdSprites[i++] = color + suffix;
             }
             return birdSprites;
         }
@@ -99,16 +98,16 @@ public class FBirdAssetManager implements Disposable {
     }
 
     public Image getImage(String name) {
-        return new Image(assetManager.get(GameDefine.gameAtlas, TextureAtlas.class).findRegion(name));
+        return new Image(assetManager.get(GameDefine.GAME_ATLAS, TextureAtlas.class).findRegion(name));
     }
 
     public TextureRegion getTextureRegion(String name) {
-        return assetManager.get(GameDefine.gameAtlas, TextureAtlas.class).findRegion(name);
+        return assetManager.get(GameDefine.GAME_ATLAS, TextureAtlas.class).findRegion(name);
     }
 
 
     public void loadTexture() {
-        this.assetManager.load(GameDefine.gameAtlas, TextureAtlas.class);
+        this.assetManager.load(GameDefine.GAME_ATLAS, TextureAtlas.class);
         this.assetManager.finishLoading();
     }
 
@@ -117,7 +116,7 @@ public class FBirdAssetManager implements Disposable {
             TextureRegion[] countDownFrame = new TextureRegion[3];
 
             for (int i = 0; i < 3; i++) {
-                countDownFrame[i] = assetManager.get(GameDefine.gameAtlas, TextureAtlas.class).findRegion(NumberImages.values()[i + 1].getNumber());
+                countDownFrame[i] = assetManager.get(GameDefine.GAME_ATLAS, TextureAtlas.class).findRegion(NumberImages.values()[i + 1].getNumber());
             }
             countDownAnimation = new Animation(1f, countDownFrame);
         }
@@ -128,7 +127,7 @@ public class FBirdAssetManager implements Disposable {
         if (this.birdAnimation.get(color) == null) {
             TextureRegion[] birdFrame = new TextureRegion[color.getSprites().length];
             for (int i = 0; i < color.getSprites().length; i++) {
-                birdFrame[i] = assetManager.get(GameDefine.gameAtlas, TextureAtlas.class).findRegion(color.getSprites()[i]);
+                birdFrame[i] = assetManager.get(GameDefine.GAME_ATLAS, TextureAtlas.class).findRegion(color.getSprites()[i]);
             }
             Animation birdAnimation = new Animation(0.5f, birdFrame);
             this.birdAnimation.put(color, birdAnimation);
@@ -138,12 +137,12 @@ public class FBirdAssetManager implements Disposable {
 
     public void loadSkin() {
         SkinLoader.SkinParameter params = new SkinLoader.SkinParameter("skin/glassy-ui.atlas");
-        this.assetManager.load(GameDefine.gameSkin, Skin.class, params);
+        this.assetManager.load(GameDefine.GAME_SKIN, Skin.class, params);
         this.assetManager.finishLoading();
     }
 
     public Skin getSkin() {
-        return this.assetManager.get(GameDefine.gameSkin, Skin.class);
+        return this.assetManager.get(GameDefine.GAME_SKIN, Skin.class);
     }
 
     public void dispose() {

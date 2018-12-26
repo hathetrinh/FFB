@@ -9,6 +9,7 @@ public class TransformationComponent implements Component, Pool.Poolable {
 
     public Vector3 position = new Vector3(0f, 0f, 0f);
     public Vector2 scale = new Vector2(1.0f, 1.0f);
+    public Vector2 size = new Vector2(1.0f, 1.0f);
     public float rotation = 0.0f;
     public boolean isHidden = false;
 

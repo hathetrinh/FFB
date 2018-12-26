@@ -7,8 +7,9 @@ import com.badlogic.ashley.systems.SortedIteratingSystem;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.Array;
-import comphieubengoan.game.GameDefine;
-import comphieubengoan.game.entity.components.*;
+import comphieubengoan.game.entity.components.Mapper;
+import comphieubengoan.game.entity.components.TextureRegionComponent;
+import comphieubengoan.game.entity.components.TransformationComponent;
 import utils.ZComparator;
 
 import java.util.Comparator;
@@ -17,7 +18,7 @@ public class RenderSystem extends SortedIteratingSystem {
 
     private OrthographicCamera cam;
     private SpriteBatch spriteBatch;
-    private Array<Entity> renderQueue = new Array<>();
+    private Array<Entity> renderQueue;
     private Comparator<Entity> comparator;
 
     private ComponentMapper<TextureRegionComponent> textureRegionComponentComponent = Mapper.textureRegionComponents;
@@ -28,6 +29,7 @@ public class RenderSystem extends SortedIteratingSystem {
         this.cam = cam;
         this.spriteBatch = spriteBatch;
         this.comparator = new ZComparator();
+        this.renderQueue = new Array<>();
     }
 
     @Override
@@ -45,25 +47,16 @@ public class RenderSystem extends SortedIteratingSystem {
         spriteBatch.begin();
 
         for (Entity entity : renderQueue) {
-            TransformationComponent transform = transformationComponents.get(entity);
-            TextureRegionComponent textureRegion = textureRegionComponentComponent.get(entity);
-            if (!transform.isHidden) {
-                float width = textureRegion.getTextureRegion().getRegionWidth()/GameDefine.PPM;
-                float height = textureRegion.getTextureRegion().getRegionHeight()/GameDefine.PPM;
-                spriteBatch.draw(textureRegion.getTextureRegion(),
-                        transform.position.x,
-                        transform.position.y,
-                        0,
-                        0,
-                        width,
-                        height,
-                        transform.scale.x,
-                        transform.scale.y,
-                        transform.rotation);
+            TransformationComponent tf = transformationComponents.get(entity);
+            TextureRegionComponent tr = textureRegionComponentComponent.get(entity);
+            float originX = tf.size.x / 2f;
+            float originY = tf.size.y / 2f;
+            if (!tf.isHidden) {
+                spriteBatch.draw(tr.getTextureRegion(), tf.position.x - originX, tf.position.y - originY, originX, originY, tf.size.x, tf.size.y, tf.scale.x, tf.scale.y, tf.rotation);
             }
         }
 
         spriteBatch.end();
+        renderQueue.clear();
     }
-
 }
