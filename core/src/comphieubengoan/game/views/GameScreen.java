@@ -4,21 +4,29 @@
 
 package comphieubengoan.game.views;
 
+import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.PooledEngine;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
 import comphieubengoan.game.GameDefine;
+import comphieubengoan.game.MyGdxGame;
 import comphieubengoan.game.controller.KeyBoardInputController;
 import comphieubengoan.game.entity.LevelFactory;
+import comphieubengoan.game.entity.components.PlayerComponent;
 import comphieubengoan.game.entity.systems.*;
+import comphieubengoan.game.loader.FBirdAssetManager;
 import utils.BodyFactory;
 import utils.FFBContactListener;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class GameScreen implements Screen {
 
@@ -30,6 +38,8 @@ public class GameScreen implements Screen {
     private World world;
     private BodyFactory bodyFactory;
     private Box2DDebugRenderer renderer;
+
+    private Entity player;
 
     public GameScreen() {
         camera = new OrthographicCamera(GameDefine.SCREEN_WIDTH, GameDefine.SCREEN_HEIGHT);
@@ -50,12 +60,15 @@ public class GameScreen implements Screen {
         engine.addSystem(new RenderSystem(camera, spriteBatch));
         engine.addSystem(new PlayerSystem(controller));
         engine.addSystem(new PhysicsSystem(world));
+        engine.addSystem(new CollisionSystem());
+        engine.addSystem(new FreePipeSystem(world));
+        engine.addSystem(new MapGeneratorSystem(levelFactory));
+        engine.addSystem(new FreeBuggerSystem(levelFactory));
 
-        levelFactory.createPlayer();
-        levelFactory.createPipe();
+        player = levelFactory.createPlayer();
         levelFactory.createBackground();
-        levelFactory.createPlatform(new Vector2(GameDefine.SCREEN_WIDTH, GameDefine.SCREEN_HEIGHT));
-        levelFactory.createPlatform(new Vector2(GameDefine.SCREEN_WIDTH, 0.0f));
+        levelFactory.createPlatform(new Vector2(GameDefine.SCREEN_WIDTH, GameDefine.SCREEN_HEIGHT + 1f));
+        levelFactory.createPlatform(new Vector2(GameDefine.SCREEN_WIDTH, -1.0f));
     }
 
     @Override
@@ -69,6 +82,29 @@ public class GameScreen implements Screen {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         renderer.render(world, camera.combined);
         engine.update(delta);
+
+        PlayerComponent player = this.player.getComponent(PlayerComponent.class);
+        List<TextureRegion> pointTextureRegions = getPointTextureRegion(player.point);
+        spriteBatch.begin();
+        Vector2 pointSize = new Vector2(0.75f, 0.75f);
+        for (int i = 0; i < pointTextureRegions.size(); i++) {
+            spriteBatch.draw(pointTextureRegions.get(i), GameDefine.SCREEN_WIDTH - 2 - (pointSize.x + 0.1f) * i, GameDefine.SCREEN_HEIGHT - 2, 0, 0, pointSize.x, pointSize.y, 1f, 1f, 0f);
+        }
+        spriteBatch.end();
+        if (player == null || (player.isDead && player.isGround)) {
+            engine.removeAllEntities();
+            MyGdxGame.getInstance().switchScreen(MyGdxGame.GameScreens.MENU);
+        }
+    }
+
+    public List<TextureRegion> getPointTextureRegion(int point) {
+        List<TextureRegion> textureRegion = new ArrayList<>();
+        do {
+            int val = point % 10;
+            textureRegion.add(FBirdAssetManager.getInstance().getTextureRegion(val + ""));
+            point = point / 10;
+        } while (point > 0);
+        return textureRegion;
     }
 
     @Override
@@ -92,8 +128,8 @@ public class GameScreen implements Screen {
 
     @Override
     public void dispose() {
-        engine.clearPools();
         world.dispose();
         spriteBatch.dispose();
+        engine.clearPools();
     }
 }

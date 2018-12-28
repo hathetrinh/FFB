@@ -6,6 +6,7 @@ package comphieubengoan.game.loader;
 
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.assets.loaders.SkinLoader;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
@@ -13,6 +14,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.Disposable;
+import comphieubengoan.game.AppPreferenes;
 import comphieubengoan.game.GameDefine;
 
 import java.util.HashMap;
@@ -30,7 +32,11 @@ public class FBirdAssetManager implements Disposable {
     public static final String AUDIO_LOCATION = "audio/";
 
     public enum Audios {
-        die, hit, point, swoosh, wing;
+        die,
+        hit,
+        point,
+        swoosh,
+        wing;
 
         public String getName() {
             return AUDIO_LOCATION + this.toString() + ".wav";
@@ -39,7 +45,16 @@ public class FBirdAssetManager implements Disposable {
 
     public enum NumberImages {
 
-        ZERO(0), ONE(1), TWO(2), THREE(3), FOUR(4), FIVE(5), SIX(6), SEVEN(7), EIGHT(8), NINE(9);
+        ZERO(0),
+        ONE(1),
+        TWO(2),
+        THREE(3),
+        FOUR(4),
+        FIVE(5),
+        SIX(6),
+        SEVEN(7),
+        EIGHT(8),
+        NINE(9);
 
         private int number;
 
@@ -54,7 +69,9 @@ public class FBirdAssetManager implements Disposable {
 
     public enum BirdAnimationColor {
 
-        RED("red"), YELLOW("yellow"), BLUE("blue");
+        RED("red"),
+        YELLOW("yellow"),
+        BLUE("blue");
 
         private String[] _suffixes = {"bird-upflap", "bird-midflap", "bird-downflap"};
         private String color;
@@ -90,11 +107,23 @@ public class FBirdAssetManager implements Disposable {
         return instance;
     }
 
-    public void loadSounds() {
+    public void loadMusics() {
         for (Audios audio : Audios.values()) {
-            this.assetManager.load(audio.getName(), Sound.class);
+            this.assetManager.load(audio.getName(), Music.class);
             this.assetManager.finishLoading();
         }
+    }
+
+    public void playMusic(Audios audios) {
+
+        Music music = assetManager.get(audios.getName(), Music.class);
+        music.setVolume(AppPreferenes.getInstance().getMusicVolume());
+        music.play();
+    }
+
+
+    public Music getMusic(Audios audios) {
+        return assetManager.get(audios.getName(), Music.class);
     }
 
     public Image getImage(String name) {

@@ -102,7 +102,7 @@ public class MenuScreen implements Screen {
         });
 
         table.row().pad(10, 0, 20, 0);
-        Label back = new Label("BACK", new Label.LabelStyle(myFont, Color.NAVY));
+        Label back = new Label("PLAY", new Label.LabelStyle(myFont, Color.NAVY));
         back.addListener((event) -> {
             Gdx.app.log(TAG, event.toString());
             if (event.toString().equals(InputEvent.Type.touchDown.name())) {

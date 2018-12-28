@@ -52,7 +52,7 @@ public class RenderSystem extends SortedIteratingSystem {
             float originX = tf.size.x / 2f;
             float originY = tf.size.y / 2f;
             if (!tf.isHidden) {
-                spriteBatch.draw(tr.getTextureRegion(), tf.position.x - originX, tf.position.y - originY, originX, originY, tf.size.x, tf.size.y, tf.scale.x, tf.scale.y, tf.rotation);
+                spriteBatch.draw(tr.textureRegion, tf.position.x - originX, tf.position.y - originY, originX, originY, tf.size.x, tf.size.y, tf.scale.x, tf.scale.y, tf.rotation);
             }
         }
 

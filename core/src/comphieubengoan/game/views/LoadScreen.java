@@ -26,7 +26,7 @@ public class LoadScreen implements Screen {
 
     public LoadScreen() {
         Gdx.app.log(TAG, "Init Loading Screen");
-        FBirdAssetManager.getInstance().loadSounds();
+        FBirdAssetManager.getInstance().loadMusics();
         FBirdAssetManager.getInstance().loadTexture();
         FBirdAssetManager.getInstance().loadSkin();
         stage = new Stage(new ScreenViewport());
@@ -61,7 +61,7 @@ public class LoadScreen implements Screen {
         Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         if (counterActor.isAnimationFinished()) {
-            MyGdxGame.getInstance().switchScreen(MyGdxGame.GameScreens.MENU);
+            MyGdxGame.getInstance().switchScreen(MyGdxGame.GameScreens.GAME_PLAY);
         }
         stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
         stage.draw();

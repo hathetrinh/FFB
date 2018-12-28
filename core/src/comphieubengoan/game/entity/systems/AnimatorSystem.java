@@ -23,7 +23,7 @@ public class AnimatorSystem extends IteratingSystem {
 
         if (animationComponent.animations.containsKey(stateComponent.state)) {
             TextureRegionComponent textureRegion = textureRegionComponents.get(entity);
-            textureRegion.setTextureRegion(animationComponent.animations.get(stateComponent.get()).getKeyFrame(stateComponent.time, stateComponent.loop));
+            textureRegion.textureRegion = animationComponent.animations.get(stateComponent.get()).getKeyFrame(stateComponent.time, stateComponent.loop);
         }
 
         stateComponent.time += deltaTime;

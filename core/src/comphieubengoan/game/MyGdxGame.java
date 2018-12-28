@@ -19,7 +19,10 @@ public class MyGdxGame extends Game {
     }
 
     public enum GameScreens {
-        MENU, SETTING, END_GAME, GAME_PLAY
+        MENU,
+        SETTING,
+        END_GAME,
+        GAME_PLAY
     }
 
     private Screen loadingScreen, menuScreen, gameScreen, settingScreen, exitScreen;
@@ -36,19 +39,24 @@ public class MyGdxGame extends Game {
         Screen currentScreen;
         switch (screen) {
             case MENU:
-                if (this.menuScreen == null) this.menuScreen = new MenuScreen();
+                if (this.menuScreen == null)
+                    this.menuScreen = new MenuScreen();
                 currentScreen = this.menuScreen;
                 break;
             case SETTING:
-                if (this.settingScreen == null) this.settingScreen = new SettingScreen();
+                if (this.settingScreen == null)
+                    this.settingScreen = new SettingScreen();
                 currentScreen = this.settingScreen;
                 break;
             case END_GAME:
-                if (this.exitScreen == null) this.exitScreen = new ExitScreen();
+                if (this.exitScreen == null)
+                    this.exitScreen = new ExitScreen();
                 currentScreen = this.exitScreen;
                 break;
             case GAME_PLAY:
-                if (this.gameScreen == null) this.gameScreen = new GameScreen();
+                if (this.gameScreen != null)
+                    this.gameScreen.dispose();
+                this.gameScreen = new GameScreen();
                 currentScreen = this.gameScreen;
                 break;
             default:

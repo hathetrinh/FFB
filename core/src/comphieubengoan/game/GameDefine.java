@@ -15,6 +15,7 @@ public interface GameDefine {
     String GAME_ATLAS = "sprites/flappy.atlas";
     String GAME_SKIN = "skin/glassy-ui.json";
 
-    float GRAVITY = -4.0f;
-    float JUMP_SPEED = 20.0f;
+    float GRAVITY = -4.8f;
+    float JUMP_SPEED = 1.0f;
+    float PIPE_SPEED = -3.0f;
 }

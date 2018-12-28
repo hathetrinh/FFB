@@ -6,10 +6,11 @@ import com.badlogic.gdx.utils.Pool;
 public class GameObjectComponent implements Component, Pool.Poolable {
 
     public static final int UNDEFINE = 0;
-    public static final int BACK_GROUND = 1;
+    public static final int BACKGROUND = 1;
     public static final int PIPE = 2;
-    public static final int PLAYER = 3;
-    public static final int POINT_ZONE = 4;
+    public static final int BUGGER = 3;
+    public static final int PLATFORM = 4;
+    public static final int PLAYER = 5;
 
     public int gameObject = UNDEFINE;
 

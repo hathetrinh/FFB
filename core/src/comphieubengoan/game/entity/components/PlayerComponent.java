@@ -8,6 +8,7 @@ public class PlayerComponent implements Component, Pool.Poolable {
 
     public OrthographicCamera cam;
     public boolean isDead = false;
+    public boolean isGround = false;
     public int point = 0;
 
     @Override
@@ -15,5 +16,6 @@ public class PlayerComponent implements Component, Pool.Poolable {
         isDead = false;
         point = 0;
         cam = null;
+        isGround = false;
     }
 }

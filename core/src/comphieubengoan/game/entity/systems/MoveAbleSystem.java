@@ -26,8 +26,8 @@ public class MoveAbleSystem extends IteratingSystem {
         BodyComponent bd = bm.get(entity);
         GameObjectComponent go = gm.get(entity);
 
-        if (go.gameObject == GameObjectComponent.PIPE) {
-            bd.body.setLinearVelocity(new Vector2(vl.getVx(), vl.getVy()));
+        if (go.gameObject != GameObjectComponent.PLAYER) {
+            bd.body.setLinearVelocity(new Vector2(vl.vx, vl.vy));
         }
     }
 
