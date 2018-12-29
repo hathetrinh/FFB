@@ -8,9 +8,20 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.World;
-import comphieubengoan.game.AppPreferenes;
+
+import comphieubengoan.game.AppPreferences;
 import comphieubengoan.game.GameDefine;
-import comphieubengoan.game.entity.components.*;
+import comphieubengoan.game.entity.components.AnimationComponent;
+import comphieubengoan.game.entity.components.BodyComponent;
+import comphieubengoan.game.entity.components.BuggerComponent;
+import comphieubengoan.game.entity.components.CollisionComponent;
+import comphieubengoan.game.entity.components.GameObjectComponent;
+import comphieubengoan.game.entity.components.PipeComponent;
+import comphieubengoan.game.entity.components.PlayerComponent;
+import comphieubengoan.game.entity.components.GameAnimationType;
+import comphieubengoan.game.entity.components.TextureRegionComponent;
+import comphieubengoan.game.entity.components.TransformationComponent;
+import comphieubengoan.game.entity.components.VelocityComponent;
 import comphieubengoan.game.loader.FBirdAssetManager;
 import utils.BodyFactory;
 
@@ -18,7 +29,7 @@ public class LevelFactory {
 
     public enum PIPE {
         UP(0, 0),
-        DOWN(GameDefine.SCREEN_HEIGHT, 180);
+        DOWN(GameDefine.GAME_SCREEN_HEIGHT, 180);
 
         PIPE(float top, float angle) {
             this.top = top;
@@ -64,20 +75,20 @@ public class LevelFactory {
         velocityComponent.vy = GameDefine.GRAVITY;
         player.add(velocityComponent);
 
-        StateComponent stateComponent = engine.createComponent(StateComponent.class);
-        stateComponent.loop = true;
-        stateComponent.set(StateComponent.STATE_NORMAL);
-        player.add(stateComponent);
+        GameAnimationType gameAnimationType = engine.createComponent(GameAnimationType.class);
+        gameAnimationType.loop = true;
+        gameAnimationType.set(GameAnimationType.PLAYER);
+        player.add(gameAnimationType);
 
-        Animation ani = FBirdAssetManager.getInstance().getBirdAnimation(FBirdAssetManager.BirdAnimationColor.valueOf(AppPreferenes.getInstance().getActorColor()));
+        Animation ani = FBirdAssetManager.getInstance().getBirdAnimation(FBirdAssetManager.BirdAnimationColor.valueOf(AppPreferences.getInstance().getActorColor().toUpperCase()));
         AnimationComponent animationComponent = engine.createComponent(AnimationComponent.class);
-        animationComponent.animations.put(stateComponent.get(), ani);
+        animationComponent.animations.put(gameAnimationType.get(), ani);
 
         player.add(animationComponent);
 
         TransformationComponent transform = engine.createComponent(TransformationComponent.class);
-        transform.position = new Vector3(10.0f, 20.0f, gameObjectComponent.gameObject);
-        transform.size = new Vector2(1, 1);
+        transform.position = new Vector3(GameDefine.GAME_SCREEN_WIDTH / 2f, GameDefine.GAME_SCREEN_HEIGHT / 2f, gameObjectComponent.gameObject);
+        transform.size = new Vector2(1, 32 / 24f);
         player.add(transform);
 
         BodyComponent bodyComponent = engine.createComponent(BodyComponent.class);
@@ -145,14 +156,22 @@ public class LevelFactory {
         bugger.add(vl);
 
         TextureRegionComponent tr = engine.createComponent(TextureRegionComponent.class);
-        tr.textureRegion = FBirdAssetManager.getInstance().getTextureRegion("redbird-upflap");
         bugger.add(tr);
+
+        GameAnimationType animationType = engine.createComponent(GameAnimationType.class);
+        animationType.set( GameAnimationType.COIN);
+        animationType.loop = true;
+        bugger.add(animationType);
+
+        AnimationComponent an = engine.createComponent(AnimationComponent.class);
+        an.animations.put(animationType.state, FBirdAssetManager.getInstance().getCoinAnimation());
+        bugger.add(an);
 
         TransformationComponent tf = engine.createComponent(TransformationComponent.class);
         float y = type == PIPE.UP ? type.getTop() + position.y : type.getTop() - position.y;
         tf.position = new Vector3(position.x, y, go.gameObject);
         tf.rotation = type.getAngle() / MathUtils.radiansToDegrees;
-        tf.size = new Vector2(1, 1);
+        tf.size = new Vector2(1, 32 / 24f);
         bugger.add(tf);
 
         BodyComponent bd = engine.createComponent(BodyComponent.class);
@@ -182,8 +201,8 @@ public class LevelFactory {
         tr.textureRegion = FBirdAssetManager.getInstance().getTextureRegion("background-day");
         background.add(tr);
 
-        transform.position.set(new Vector3(GameDefine.SCREEN_WIDTH / 2f, GameDefine.SCREEN_HEIGHT / 2f, gameObjectComponent.gameObject));
-        transform.size.set(new Vector2(GameDefine.SCREEN_WIDTH, GameDefine.SCREEN_HEIGHT));
+        transform.position.set(new Vector3(GameDefine.GAME_SCREEN_WIDTH / 2f, GameDefine.GAME_SCREEN_HEIGHT / 2f, gameObjectComponent.gameObject));
+        transform.size.set(new Vector2(GameDefine.GAME_SCREEN_WIDTH, GameDefine.GAME_SCREEN_HEIGHT));
         background.add(transform);
 
         engine.addEntity(background);
@@ -202,7 +221,7 @@ public class LevelFactory {
         platform.add(go);
 
         tf.position.set(new Vector3(position.x / 2f, position.y, go.gameObject));
-        tf.size.set(new Vector2(GameDefine.SCREEN_WIDTH, 3.0f));
+        tf.size.set(new Vector2(GameDefine.GAME_SCREEN_WIDTH, 3.0f));
         platform.add(tf);
 
         bd.body = bodyFactory.makeBoxPolyBody(tf, BodyFactory.STONE, BodyDef.BodyType.StaticBody);

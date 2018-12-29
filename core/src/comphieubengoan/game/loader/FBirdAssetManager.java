@@ -7,14 +7,14 @@ package comphieubengoan.game.loader;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.assets.loaders.SkinLoader;
 import com.badlogic.gdx.audio.Music;
-import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.Disposable;
-import comphieubengoan.game.AppPreferenes;
+
+import comphieubengoan.game.AppPreferences;
 import comphieubengoan.game.GameDefine;
 
 import java.util.HashMap;
@@ -25,11 +25,14 @@ public class FBirdAssetManager implements Disposable {
     private static FBirdAssetManager instance;
     public AssetManager assetManager;
     private Animation countDownAnimation;
+    private Animation coinAnimation;
     private Map<BirdAnimationColor, Animation> birdAnimation = new HashMap<>();
 
     public static final String PIPE_IMAGE = "pipe-green";
 
     public static final String AUDIO_LOCATION = "audio/";
+
+    public static String[] COIN_TEXTURE = new String[]{"coin1", "coin2", "coin3", "coin4", "coin5", "coin6"};
 
     public enum Audios {
         die,
@@ -115,15 +118,15 @@ public class FBirdAssetManager implements Disposable {
     }
 
     public void playMusic(Audios audios) {
-
-        Music music = assetManager.get(audios.getName(), Music.class);
-        music.setVolume(AppPreferenes.getInstance().getMusicVolume());
-        music.play();
+        getMusic(audios).play();
     }
 
-
     public Music getMusic(Audios audios) {
-        return assetManager.get(audios.getName(), Music.class);
+        boolean isMusicEnable = AppPreferences.getInstance().isMusicEnable();
+        Music music = assetManager.get(audios.getName(), Music.class);
+        music.setVolume(isMusicEnable ? AppPreferences.getInstance().getMusicVolume() : 0);
+
+        return music;
     }
 
     public Image getImage(String name) {
@@ -158,10 +161,23 @@ public class FBirdAssetManager implements Disposable {
             for (int i = 0; i < color.getSprites().length; i++) {
                 birdFrame[i] = assetManager.get(GameDefine.GAME_ATLAS, TextureAtlas.class).findRegion(color.getSprites()[i]);
             }
-            Animation birdAnimation = new Animation(0.5f, birdFrame);
+            Animation birdAnimation = new Animation(0.1f, birdFrame);
             this.birdAnimation.put(color, birdAnimation);
         }
         return this.birdAnimation.get(color);
+    }
+
+    public Animation getCoinAnimation() {
+        if (this.coinAnimation != null) {
+            return this.coinAnimation;
+        }
+
+        TextureRegion[] coinFrame = new TextureRegion[6];
+        for (int i = 0; i < 6; i++) {
+            coinFrame[i] = assetManager.get(GameDefine.GAME_ATLAS, TextureAtlas.class).findRegion(COIN_TEXTURE[i]);
+        }
+        coinAnimation = new Animation(0.5f, coinFrame);
+        return this.coinAnimation;
     }
 
     public void loadSkin() {

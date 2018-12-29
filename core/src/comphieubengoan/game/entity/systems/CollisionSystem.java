@@ -6,9 +6,7 @@ import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.systems.IteratingSystem;
 import comphieubengoan.game.entity.components.*;
 import comphieubengoan.game.loader.FBirdAssetManager;
-import lombok.extern.java.Log;
 
-@Log
 public class CollisionSystem extends IteratingSystem {
 
     ComponentMapper<CollisionComponent> pCollisionMapper = Mapper.collisionComponents;

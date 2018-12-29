@@ -6,7 +6,6 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
-import comphieubengoan.game.GameDefine;
 
 public class AnimationActor extends Actor {
     private Animation animation;
@@ -33,8 +32,8 @@ public class AnimationActor extends Actor {
     public void draw(Batch batch, float parentAlpha) {
         super.draw(batch, parentAlpha);
         this.time += Gdx.graphics.getDeltaTime();
-        textureRegion = animation.getKeyFrame(this.time, looping);
-        batch.draw(textureRegion, getX(), getY(), textureRegion.getRegionWidth() / ppm, textureRegion.getRegionHeight() / ppm);
+        textureRegion = (TextureRegion) animation.getKeyFrame(this.time, looping);
+        batch.draw(textureRegion, getX(), getY(), this.getWidth() / ppm, this.getHeight() / ppm);
         batch.setBlendFunction(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
     }
 

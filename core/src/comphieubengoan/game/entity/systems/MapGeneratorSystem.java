@@ -3,7 +3,9 @@ package comphieubengoan.game.entity.systems;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.systems.IteratingSystem;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
+
 import comphieubengoan.game.GameDefine;
 import comphieubengoan.game.entity.LevelFactory;
 
@@ -27,9 +29,9 @@ public class MapGeneratorSystem extends IteratingSystem {
             timeLife = 0.0f;
             Random random = new Random();
             LevelFactory.PIPE type = random.nextBoolean() ? LevelFactory.PIPE.UP : LevelFactory.PIPE.DOWN;
-            float posY = random.nextInt(7);
-            levelFactory.createPipe(new Vector2(GameDefine.SCREEN_WIDTH + 2, posY), type);
-            levelFactory.createBugger(new Vector2(GameDefine.SCREEN_WIDTH + 2, posY + 10), type);
+            float posY = random.nextInt(4) * Gdx.graphics.getHeight() / Gdx.graphics.getWidth();
+            levelFactory.createPipe(new Vector2(GameDefine.GAME_SCREEN_WIDTH + 2, posY), type);
+            levelFactory.createBugger(new Vector2(GameDefine.GAME_SCREEN_WIDTH + 2, posY + 10), type);
         }
     }
 
