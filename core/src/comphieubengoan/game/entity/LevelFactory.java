@@ -88,7 +88,7 @@ public class LevelFactory {
 
         TransformationComponent transform = engine.createComponent(TransformationComponent.class);
         transform.position = new Vector3(GameDefine.GAME_SCREEN_WIDTH / 2f, GameDefine.GAME_SCREEN_HEIGHT / 2f, gameObjectComponent.gameObject);
-        transform.size = new Vector2(1, 32 / 24f);
+        transform.size = new Vector2(1f, 1f);
         player.add(transform);
 
         BodyComponent bodyComponent = engine.createComponent(BodyComponent.class);

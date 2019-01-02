@@ -4,6 +4,7 @@
 
 package comphieubengoan.game.loader;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.assets.loaders.SkinLoader;
 import com.badlogic.gdx.audio.Music;
@@ -147,8 +148,9 @@ public class FBirdAssetManager implements Disposable {
         if (countDownAnimation == null) {
             TextureRegion[] countDownFrame = new TextureRegion[3];
 
-            for (int i = 0; i < 3; i++) {
-                countDownFrame[i] = assetManager.get(GameDefine.GAME_ATLAS, TextureAtlas.class).findRegion(NumberImages.values()[i + 1].getNumber());
+            int temp = 0;
+            for (int i = 3; i > 0; i--) {
+                countDownFrame[temp++] = assetManager.get(GameDefine.GAME_ATLAS, TextureAtlas.class).findRegion(NumberImages.values()[i].getNumber());
             }
             countDownAnimation = new Animation(1f, countDownFrame);
         }
@@ -181,7 +183,7 @@ public class FBirdAssetManager implements Disposable {
     }
 
     public void loadSkin() {
-        SkinLoader.SkinParameter params = new SkinLoader.SkinParameter("skin/glassy-ui.atlas");
+        SkinLoader.SkinParameter params = new SkinLoader.SkinParameter("skin/plain-james-ui.atlas");
         this.assetManager.load(GameDefine.GAME_SKIN, Skin.class, params);
         this.assetManager.finishLoading();
     }
@@ -192,5 +194,10 @@ public class FBirdAssetManager implements Disposable {
 
     public void dispose() {
         this.assetManager.dispose();
+        birdAnimation = null;
+        coinAnimation = null;
+        countDownAnimation = null;
+        instance = null;
+        Gdx.app.log("trinhha", FBirdAssetManager.class.getName());
     }
 }

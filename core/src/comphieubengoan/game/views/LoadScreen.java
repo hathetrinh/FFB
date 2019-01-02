@@ -41,7 +41,7 @@ public class LoadScreen implements Screen {
         counterActor = new AnimationActor(FBirdAssetManager.getInstance().getCountDownAnimation());
         counterActor.setSize(1f, 36 / 16f);
         message = FBirdAssetManager.getInstance().getImage("message");
-        message.setSize(7f, 7 * 267 / 184f);
+        message.setSize(7f, 7 * 267f / 184f);
         background = FBirdAssetManager.getInstance().getImage("background-day");
     }
 
@@ -68,15 +68,17 @@ public class LoadScreen implements Screen {
     @Override
     public void render(float delta) {
         Gdx.gl.glClearColor(0, 0, 0, 1);
-        Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-
+        Gdx.gl.glTexParameterf(GL20.GL_TEXTURE_2D, GL20.GL_TEXTURE_MIN_FILTER, GL20.GL_NEAREST);
+        Gdx.gl.glTexParameterf(GL20.GL_TEXTURE_2D, GL20.GL_TEXTURE_WRAP_S, GL20.GL_CLAMP_TO_EDGE);
         stage.getCamera().update();
         stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
         stage.draw();
         if (counterActor.isAnimationFinished()) {
+            FBirdAssetManager.getInstance().playMusic(FBirdAssetManager.Audios.point);
             MyGdxGame.getInstance().switchScreen(MyGdxGame.GameScreens.GAME_PLAY);
         }
+
     }
 
     @Override

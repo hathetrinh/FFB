@@ -57,7 +57,7 @@ public class GameScreen implements Screen {
     private boolean isPause;
     private Stage stage;
 
-    private Image btnSettings, btnReplay, btnMenu;
+    private Image btnReplay, btnMenu, btnPause;
 
     private Entity player;
 
@@ -114,12 +114,24 @@ public class GameScreen implements Screen {
                 return super.touchDown(event, x, y, pointer, button);
             }
         });
+
+        this.btnPause.addListener(new ClickListener() {
+            @Override
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                isPause = false;
+                return super.touchDown(event, x, y, pointer, button);
+            }
+        });
     }
 
     @Override
     public void render(float delta) {
-        Gdx.gl.glClearColor(0f, 0f, 0f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        Gdx.gl.glClearColor(0f, 0f, 0f, 1);
+        Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
+        Gdx.gl.glTexParameterf(GL20.GL_TEXTURE_2D, GL20.GL_TEXTURE_MIN_FILTER, GL20.GL_NEAREST);
+        Gdx.gl.glTexParameterf(GL20.GL_TEXTURE_2D, GL20.GL_TEXTURE_WRAP_S, GL20.GL_CLAMP_TO_EDGE);
+
         renderer.render(world, camera.combined);
         engine.update(delta);
 
@@ -139,17 +151,24 @@ public class GameScreen implements Screen {
         }
     }
 
-    public void renderInGameMenu(Boolean isPause) {
+    public void renderInGameMenu(Boolean needRender) {
         List<TextureRegion> pointTextureRegions = getPointTextureRegion(point);
         spriteBatch.begin();
+        spriteBatch.enableBlending();
         Vector2 pointSize = new Vector2(1 / 2f, 18 / 16f);
         for (int i = 0; i < pointTextureRegions.size(); i++) {
             spriteBatch.draw(pointTextureRegions.get(i), GameDefine.GAME_SCREEN_WIDTH - 2 - (pointSize.x + 0.1f) * i, GameDefine.GAME_SCREEN_HEIGHT - 2, 0, 0, pointSize.x, pointSize.y, 1f, 1f, 0f);
         }
 
-        if (isPause) {
+        if (needRender) {
             btnMenu.draw(spriteBatch, 1);
-            btnReplay.draw(spriteBatch, 1);
+            if (isPause) {
+                btnPause.draw(spriteBatch, 1);
+                this.stage.addActor(btnPause);
+            } else {
+                btnReplay.draw(spriteBatch, 1);
+                this.stage.addActor(btnReplay);
+            }
         }
 
         spriteBatch.end();
@@ -167,24 +186,23 @@ public class GameScreen implements Screen {
 
     public void createInGameMenu() {
         this.btnMenu = FBirdAssetManager.getInstance().getImage("menu");
-        this.btnMenu.setSize(2f, 2f);
-        this.btnMenu.setPosition(3, GameDefine.GAME_SCREEN_HEIGHT / 2);
+        this.btnMenu.setSize(3f, 3f);
+        this.btnMenu.setPosition(GameDefine.GAME_SCREEN_WIDTH / 2 - 1.5f * btnMenu.getWidth(), GameDefine.GAME_SCREEN_HEIGHT / 2 - btnMenu.getHeight() / 2);
         stage.addActor(btnMenu);
 
-        this.btnSettings = FBirdAssetManager.getInstance().getImage("setting");
-        this.btnSettings.setSize(1f, 1f);
-        this.btnSettings.setPosition(1f, GameDefine.GAME_SCREEN_HEIGHT - 2);
+        this.btnReplay = FBirdAssetManager.getInstance().getImage("play");
+        this.btnReplay.setSize(3f, 3f);
+        this.btnReplay.setPosition(GameDefine.GAME_SCREEN_WIDTH / 2 + btnReplay.getWidth(), GameDefine.GAME_SCREEN_HEIGHT / 2 - btnReplay.getHeight() / 2);
+//        stage.addActor(btnReplay);
 
-        this.btnReplay = FBirdAssetManager.getInstance().getImage("replay");
-        this.btnReplay.setSize(2f, 2f);
-        this.btnReplay.setPosition(9, GameDefine.GAME_SCREEN_HEIGHT / 2);
-        stage.addActor(btnReplay);
-
+        this.btnPause = FBirdAssetManager.getInstance().getImage("pause");
+        this.btnPause.setSize(3f, 3f);
+        this.btnPause.setPosition(GameDefine.GAME_SCREEN_WIDTH / 2 + btnPause.getWidth(), GameDefine.GAME_SCREEN_HEIGHT / 2 - btnPause.getHeight() / 2);
+//        stage.addActor(btnPause);
     }
 
     @Override
     public void resize(int width, int height) {
-
     }
 
     @Override
@@ -195,7 +213,6 @@ public class GameScreen implements Screen {
     @Override
     public void resume() {
         Gdx.input.setInputProcessor(controller);
-        this.isPause = false;
     }
 
     @Override

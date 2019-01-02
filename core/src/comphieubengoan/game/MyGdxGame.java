@@ -69,5 +69,6 @@ public class MyGdxGame extends Game {
     @Override
     public void dispose() {
         super.dispose();
+        instance = null;
     }
 }
