@@ -1,12 +1,20 @@
 package comphieubengoan.game;
 
 import com.badlogic.gdx.Game;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+
 import comphieubengoan.game.views.*;
+import utils.AdsController;
 
 public class MyGdxGame extends Game {
 
     private static MyGdxGame instance;
+    private AdsController adsController;
+
+    private MyGdxGame(AdsController adsController) {
+        this.adsController = adsController;
+    }
 
     private MyGdxGame() {
     }
@@ -14,9 +22,29 @@ public class MyGdxGame extends Game {
     public static MyGdxGame getInstance() {
         if (instance == null) {
             instance = new MyGdxGame();
+            instance.adsController = new AdsController() {
+                @Override
+                public void showBannerAd() {
+                    Gdx.app.log("ADS", "Do No Thing!");
+                }
+
+                @Override
+                public void hideBannerAd() {
+                    Gdx.app.log("ADS", "Do No Thing!");
+                }
+            };
         }
         return instance;
     }
+
+
+    public static MyGdxGame getInstance(AdsController adsController) {
+        if (instance == null) {
+            instance = new MyGdxGame(adsController);
+        }
+        return instance;
+    }
+
 
     public enum GameScreens {
         MENU,
@@ -33,6 +61,7 @@ public class MyGdxGame extends Game {
             this.loadingScreen = new LoadScreen();
         }
         this.setScreen(this.loadingScreen);
+        this.adsController.showBannerAd();
     }
 
     public void switchScreen(GameScreens screen) {
@@ -42,6 +71,7 @@ public class MyGdxGame extends Game {
                 if (this.menuScreen == null)
                     this.menuScreen = new MenuScreen();
                 currentScreen = this.menuScreen;
+                this.adsController.showBannerAd();
                 break;
             case SETTING:
                 if (this.settingScreen == null)
@@ -54,6 +84,8 @@ public class MyGdxGame extends Game {
                 currentScreen = this.exitScreen;
                 break;
             case GAME_PLAY:
+                this.adsController.hideBannerAd();
+
                 if (this.gameScreen != null)
                     this.gameScreen.dispose();
                 this.gameScreen = new GameScreen();
