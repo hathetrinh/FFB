@@ -38,7 +38,7 @@ public class FBirdAssetManager implements Disposable {
     private AnimationResource angelAnimationResource = new AnimationResource(ANI_TYPES.bird, "player", 2, "sprites", "crazy_angel", 1 / 2f);
     private AnimationResource attackerAnimationResource = new AnimationResource(ANI_TYPES.spaceship, "spaceship", 2, "sprites", "crazy_angel", 1 / 10f);
     private AnimationResource countDownAnimationResource = new AnimationResource(ANI_TYPES.countdown, "number", 3, "sprites", "crazy_angel", 1f);
-    private AnimationResource coinAnimationResource = new AnimationResource(ANI_TYPES.coin, "coin", 6, "sprites", "crazy_angel", 1 / 2f);
+    private AnimationResource coinAnimationResource = new AnimationResource(ANI_TYPES.coin, "coin3d", 6, "sprites", "crazy_angel", 1 / 2f);
     private AnimationResource deadAnimationResource = new AnimationResource(ANI_TYPES.explosion, "explosion", 4, "sprites", "crazy_angel", 1f);
 
     private static final String GAME_TEXTURE_ITEMS = "sprites/crazy_angel.atlas";

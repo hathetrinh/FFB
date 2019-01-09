@@ -11,7 +11,6 @@ import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdSize;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.MobileAds;
-
 import com.phieubengoan.game.crazybird.MyGdxGame;
 import com.phieubengoan.game.crazybird.utils.AdsController;
 

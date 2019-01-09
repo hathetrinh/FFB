@@ -3,9 +3,12 @@ package com.phieubengoan.game.crazybird;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
-
-import com.phieubengoan.game.crazybird.views.*;
 import com.phieubengoan.game.crazybird.utils.AdsController;
+import com.phieubengoan.game.crazybird.views.ExitScreen;
+import com.phieubengoan.game.crazybird.views.GameScreen;
+import com.phieubengoan.game.crazybird.views.LoadScreen;
+import com.phieubengoan.game.crazybird.views.MenuScreen;
+import com.phieubengoan.game.crazybird.views.SettingScreen;
 
 public class MyGdxGame extends Game {
 

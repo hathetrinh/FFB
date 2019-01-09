@@ -1,3 +1,4 @@
+/*
 package com.phieubengoan.game.crazybird.utils;
 
 import com.badlogic.gdx.Gdx;
@@ -156,3 +157,4 @@ public class MyFont implements Disposable {
         return generator.generateFont(parameter);
     }
 }
+*/

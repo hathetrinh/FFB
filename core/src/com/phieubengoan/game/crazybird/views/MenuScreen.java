@@ -10,16 +10,20 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.*;
+import com.badlogic.gdx.scenes.scene2d.ui.CheckBox;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.Slider;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.FillViewport;
-
 import com.phieubengoan.game.crazybird.AppPreferences;
 import com.phieubengoan.game.crazybird.GameDefine;
 import com.phieubengoan.game.crazybird.MyGdxGame;
 import com.phieubengoan.game.crazybird.loader.FBirdAssetManager;
+import com.phieubengoan.game.crazybird.utils.FontDefines;
 import com.phieubengoan.game.crazybird.utils.MyButton;
-import com.phieubengoan.game.crazybird.utils.MyFont;
 
 public class MenuScreen implements Screen {
 
@@ -43,8 +47,8 @@ public class MenuScreen implements Screen {
 
         Skin skin = FBirdAssetManager.getInstance().getSkin();
 
-        BitmapFont myFont = new MyFont.MyFontBuilder(GameDefine.DEFAULT_FONT_NAME).setFontSize(GameDefine.DEFAULT_MENU_ITEM_FONT_SIZE).build().getFont();
-        BitmapFont myHeaderFont = new MyFont.MyFontBuilder(GameDefine.DEFAULT_FONT_TITLE_NAME).setFontSize(GameDefine.DEFAULT_FONT_MENU_TITLE_SIZE).build().getFont();
+        BitmapFont myFont = FontDefines.getInstance().fontMenuItem;
+        BitmapFont myHeaderFont = FontDefines.getInstance().fontMenuTitle;
         skin.add("myFont", myFont, BitmapFont.class);
 
         Table table = new Table(skin);
