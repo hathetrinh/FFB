@@ -9,6 +9,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.utils.Disposable;
 import com.phieubengoan.game.crazybird.GameDefine;
 import com.phieubengoan.game.crazybird.entity.components.AnimationComponent;
 import com.phieubengoan.game.crazybird.entity.components.AnimationInfo;
@@ -27,7 +28,7 @@ import com.phieubengoan.game.crazybird.entity.components.ZIndexDefinition;
 import com.phieubengoan.game.crazybird.loader.FBirdAssetManager;
 import com.phieubengoan.game.crazybird.utils.BodyFactory;
 
-public class LevelFactory {
+public class LevelFactory implements Disposable {
 
     public enum LOCATION {
         BOTTOM(0, 0),
@@ -287,7 +288,6 @@ public class LevelFactory {
         return platform;
     }
 
-
     public Entity createBullet(float posx, float posy, BulletComponent.Owner owner) {
         Entity bullet = engine.createEntity();
 
@@ -316,5 +316,11 @@ public class LevelFactory {
 
         engine.addEntity(bullet);
         return bullet;
+    }
+
+    @Override
+    public void dispose() {
+        this.engine.clearPools();
+        this.bodyFactory.dispose();
     }
 }

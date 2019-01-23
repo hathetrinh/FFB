@@ -1,404 +1,341 @@
 crazy_angel.png
-size: 3900, 4429
+size: 2048, 3968
 format: RGBA8888
 filter: Linear,Linear
 repeat: none
 airship
   rotate: false
-  xy: 1124, 174
-  size: 800, 469
-  orig: 800, 469
+  xy: 1024, 1920
+  size: 1024, 512
+  orig: 1024, 512
   offset: 0, 0
   index: -1
 background
   rotate: false
-  xy: 0, 2893
-  size: 3072, 1536
-  orig: 3072, 1536
-  offset: 0, 0
-  index: -1
-btn_clicked
-  rotate: false
-  xy: 1990, 0
-  size: 318, 140
-  orig: 318, 140
+  xy: 0, 2944
+  size: 2048, 1024
+  orig: 2048, 1024
   offset: 0, 0
   index: -1
 btn_exit_clicked
   rotate: false
-  xy: 3265, 0
-  size: 173, 174
-  orig: 173, 174
+  xy: 1044, 0
+  size: 128, 128
+  orig: 128, 128
   offset: 0, 0
   index: -1
 btn_exit_normal
   rotate: false
-  xy: 520, 174
-  size: 175, 175
-  orig: 175, 175
+  xy: 1300, 0
+  size: 128, 128
+  orig: 128, 128
   offset: 0, 0
   index: -1
 btn_g_menu_clicked
   rotate: false
-  xy: 1672, 0
-  size: 318, 140
-  orig: 318, 140
+  xy: 896, 128
+  size: 256, 128
+  orig: 256, 128
   offset: 0, 0
   index: -1
 btn_g_menu_normal
   rotate: false
-  xy: 2308, 0
-  size: 319, 141
-  orig: 319, 141
+  xy: 640, 128
+  size: 256, 128
+  orig: 256, 128
   offset: 0, 0
   index: -1
 btn_g_play_clicked
   rotate: false
-  xy: 1354, 0
-  size: 318, 140
-  orig: 318, 140
+  xy: 1152, 128
+  size: 256, 128
+  orig: 256, 128
   offset: 0, 0
   index: -1
 btn_g_play_normal
   rotate: false
-  xy: 2627, 0
-  size: 319, 141
-  orig: 319, 141
+  xy: 1408, 128
+  size: 256, 128
+  orig: 256, 128
+  offset: 0, 0
+  index: -1
+btn_gameplay_clicked
+  rotate: false
+  xy: 1556, 0
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+btn_gameplay_normal
+  rotate: false
+  xy: 1428, 0
+  size: 128, 128
+  orig: 128, 128
   offset: 0, 0
   index: -1
 btn_menu_clicked
   rotate: false
-  xy: 695, 174
-  size: 173, 175
-  orig: 173, 175
+  xy: 660, 0
+  size: 128, 128
+  orig: 128, 128
   offset: 0, 0
   index: -1
 btn_menu_normal
   rotate: false
-  xy: 172, 174
-  size: 174, 175
-  orig: 174, 175
-  offset: 0, 0
-  index: -1
-btn_normal
-  rotate: false
-  xy: 2946, 0
-  size: 319, 141
-  orig: 319, 141
+  xy: 512, 128
+  size: 128, 128
+  orig: 128, 128
   offset: 0, 0
   index: -1
 btn_pause_clicked
   rotate: false
-  xy: 3611, 0
-  size: 174, 174
-  orig: 174, 174
+  xy: 0, 128
+  size: 128, 128
+  orig: 128, 128
   offset: 0, 0
   index: -1
 btn_pause_normal
   rotate: false
-  xy: 346, 174
-  size: 174, 175
-  orig: 174, 175
+  xy: 1812, 0
+  size: 128, 128
+  orig: 128, 128
   offset: 0, 0
   index: -1
 btn_play_clicked
   rotate: false
-  xy: 3438, 0
-  size: 173, 174
-  orig: 173, 174
+  xy: 1684, 0
+  size: 128, 128
+  orig: 128, 128
   offset: 0, 0
   index: -1
 btn_play_normal
   rotate: false
-  xy: 0, 174
-  size: 172, 174
-  orig: 172, 174
+  xy: 384, 128
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+btn_share_clicked
+  rotate: false
+  xy: 256, 128
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+btn_share_normal
+  rotate: false
+  xy: 128, 128
+  size: 128, 128
+  orig: 128, 128
   offset: 0, 0
   index: -1
 cactus
   rotate: false
-  xy: 1219, 1182
-  size: 480, 611
-  orig: 480, 611
-  offset: 0, 0
-  index: -1
-coin01
-  rotate: false
-  xy: 2912, 174
-  size: 494, 496
-  orig: 494, 496
-  offset: 0, 0
-  index: -1
-coin02
-  rotate: false
-  xy: 3406, 174
-  size: 494, 496
-  orig: 494, 496
-  offset: 0, 0
-  index: -1
-coin03
-  rotate: false
-  xy: 2418, 174
-  size: 494, 496
-  orig: 494, 496
+  xy: 1024, 896
+  size: 512, 1024
+  orig: 512, 1024
   offset: 0, 0
   index: -1
 coin3d01
   rotate: false
-  xy: 232, 0
-  size: 87, 88
-  orig: 87, 88
+  xy: 572, 0
+  size: 88, 88
+  orig: 88, 88
   offset: 0, 0
   index: -1
 coin3d02
   rotate: false
-  xy: 509, 0
+  xy: 418, 0
   size: 76, 88
   orig: 76, 88
   offset: 0, 0
   index: -1
 coin3d03
   rotate: false
-  xy: 428, 0
-  size: 41, 88
-  orig: 41, 88
+  xy: 376, 0
+  size: 42, 88
+  orig: 42, 88
   offset: 0, 0
   index: -1
 coin3d04
   rotate: false
-  xy: 396, 0
+  xy: 240, 0
   size: 32, 88
   orig: 32, 88
   offset: 0, 0
   index: -1
 coin3d05
   rotate: false
-  xy: 469, 0
+  xy: 336, 0
   size: 40, 88
   orig: 40, 88
   offset: 0, 0
   index: -1
 coin3d06
   rotate: false
-  xy: 319, 0
-  size: 77, 88
-  orig: 77, 88
-  offset: 0, 0
-  index: -1
-coin04
-  rotate: false
-  xy: 0, 670
-  size: 494, 496
-  orig: 494, 496
-  offset: 0, 0
-  index: -1
-coin05
-  rotate: false
-  xy: 1924, 174
-  size: 494, 496
-  orig: 494, 496
-  offset: 0, 0
-  index: -1
-coin06
-  rotate: false
-  xy: 494, 670
-  size: 494, 496
-  orig: 494, 496
-  offset: 0, 0
-  index: -1
-coin07
-  rotate: false
-  xy: 2470, 670
-  size: 494, 496
-  orig: 494, 496
-  offset: 0, 0
-  index: -1
-coin08
-  rotate: false
-  xy: 1976, 670
-  size: 494, 496
-  orig: 494, 496
-  offset: 0, 0
-  index: -1
-coin09
-  rotate: false
-  xy: 988, 670
-  size: 494, 496
-  orig: 494, 496
-  offset: 0, 0
-  index: -1
-coin10
-  rotate: false
-  xy: 1482, 670
-  size: 494, 496
-  orig: 494, 496
+  xy: 494, 0
+  size: 78, 89
+  orig: 78, 89
   offset: 0, 0
   index: -1
 explosion01
   rotate: false
-  xy: 868, 174
+  xy: 1664, 128
   size: 256, 256
   orig: 256, 256
   offset: 0, 0
   index: -1
 explosion02
   rotate: false
-  xy: 1226, 0
+  xy: 1172, 0
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: -1
 explosion03
   rotate: false
-  xy: 970, 0
+  xy: 916, 0
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: -1
 explosion04
   rotate: false
-  xy: 1098, 0
+  xy: 788, 0
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: -1
 gameover
   rotate: false
-  xy: 585, 0
+  xy: 0, 384
   size: 385, 127
   orig: 385, 127
   offset: 0, 0
   index: -1
 number00
   rotate: false
-  xy: 160, 0
-  size: 24, 36
-  orig: 24, 36
+  xy: 80, 0
+  size: 32, 32
+  orig: 32, 32
   offset: 0, 0
   index: -1
 number01
   rotate: false
   xy: 0, 0
-  size: 16, 36
-  orig: 16, 36
+  size: 16, 32
+  orig: 16, 32
   offset: 0, 0
   index: -1
 number02
   rotate: false
-  xy: 16, 0
-  size: 24, 36
-  orig: 24, 36
+  xy: 48, 0
+  size: 32, 32
+  orig: 32, 32
   offset: 0, 0
   index: -1
 number03
   rotate: false
-  xy: 64, 0
-  size: 24, 36
-  orig: 24, 36
+  xy: 144, 0
+  size: 32, 32
+  orig: 32, 32
   offset: 0, 0
   index: -1
 number04
   rotate: false
-  xy: 136, 0
-  size: 24, 36
-  orig: 24, 36
+  xy: 16, 0
+  size: 32, 32
+  orig: 32, 32
   offset: 0, 0
   index: -1
 number05
   rotate: false
-  xy: 88, 0
-  size: 24, 36
-  orig: 24, 36
+  xy: 112, 0
+  size: 32, 32
+  orig: 32, 32
   offset: 0, 0
   index: -1
 number06
   rotate: false
-  xy: 112, 0
-  size: 24, 36
-  orig: 24, 36
+  xy: 176, 0
+  size: 32, 32
+  orig: 32, 32
   offset: 0, 0
   index: -1
 number07
   rotate: false
-  xy: 184, 0
-  size: 24, 36
-  orig: 24, 36
+  xy: 304, 0
+  size: 32, 32
+  orig: 32, 32
   offset: 0, 0
   index: -1
 number08
   rotate: false
-  xy: 40, 0
-  size: 24, 36
-  orig: 24, 36
+  xy: 272, 0
+  size: 32, 32
+  orig: 32, 32
   offset: 0, 0
   index: -1
 number09
   rotate: false
   xy: 208, 0
-  size: 24, 36
-  orig: 24, 36
+  size: 32, 32
+  orig: 32, 32
   offset: 0, 0
   index: -1
 player01
   rotate: false
-  xy: 0, 1182
-  size: 634, 512
-  orig: 634, 512
+  xy: 1409, 384
+  size: 512, 512
+  orig: 512, 512
   offset: 0, 0
   index: -1
 player02
   rotate: false
-  xy: 2964, 670
-  size: 634, 512
-  orig: 634, 512
+  xy: 385, 384
+  size: 512, 512
+  orig: 512, 512
+  offset: 0, 0
+  index: -1
+player03
+  rotate: false
+  xy: 897, 384
+  size: 512, 512
+  orig: 512, 512
+  offset: 0, 0
+  index: -1
+player04
+  rotate: false
+  xy: 512, 896
+  size: 512, 512
+  orig: 512, 512
   offset: 0, 0
   index: -1
 spaceship01
   rotate: false
-  xy: 1699, 1182
-  size: 990, 640
-  orig: 990, 640
+  xy: 1024, 2432
+  size: 1024, 512
+  orig: 1024, 512
   offset: 0, 0
   index: -1
 spaceship02
   rotate: false
-  xy: 2689, 1182
-  size: 990, 640
-  orig: 990, 640
+  xy: 0, 1920
+  size: 1024, 512
+  orig: 1024, 512
   offset: 0, 0
   index: -1
 tree
   rotate: false
-  xy: 634, 1182
-  size: 585, 565
-  orig: 585, 565
+  xy: 0, 896
+  size: 512, 512
+  orig: 512, 512
   offset: 0, 0
   index: -1
 ufo
   rotate: false
-  xy: 2226, 1822
-  size: 1584, 1071
-  orig: 1584, 1071
-  offset: 0, 0
-  index: -1
-wood1
-  rotate: false
-  xy: 1484, 1822
-  size: 742, 855
-  orig: 742, 855
-  offset: 0, 0
-  index: -1
-wood2
-  rotate: false
-  xy: 0, 1822
-  size: 742, 855
-  orig: 742, 855
-  offset: 0, 0
-  index: -1
-wood3
-  rotate: false
-  xy: 742, 1822
-  size: 742, 855
-  orig: 742, 855
+  xy: 0, 2432
+  size: 1024, 512
+  orig: 1024, 512
   offset: 0, 0
   index: -1

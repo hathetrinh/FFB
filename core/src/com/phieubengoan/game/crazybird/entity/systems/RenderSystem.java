@@ -7,7 +7,6 @@ import com.badlogic.ashley.systems.SortedIteratingSystem;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.Array;
-
 import com.phieubengoan.game.crazybird.entity.components.Mapper;
 import com.phieubengoan.game.crazybird.entity.components.TextureRegionComponent;
 import com.phieubengoan.game.crazybird.entity.components.TransformationComponent;

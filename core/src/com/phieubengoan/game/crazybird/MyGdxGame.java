@@ -3,7 +3,10 @@ package com.phieubengoan.game.crazybird;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
-import com.phieubengoan.game.crazybird.utils.AdsController;
+import com.phieubengoan.game.crazybird.loader.FBirdAssetManager;
+import com.phieubengoan.game.crazybird.utils.FontDefines;
+import com.phieubengoan.game.crazybird.utils.IActivityRequestHandler;
+import com.phieubengoan.game.crazybird.views.CountDownScreen;
 import com.phieubengoan.game.crazybird.views.ExitScreen;
 import com.phieubengoan.game.crazybird.views.GameScreen;
 import com.phieubengoan.game.crazybird.views.LoadScreen;
@@ -13,10 +16,11 @@ import com.phieubengoan.game.crazybird.views.SettingScreen;
 public class MyGdxGame extends Game {
 
     private static MyGdxGame instance;
-    private AdsController adsController;
+    private IActivityRequestHandler IActivityRequestHandler;
+    private static int timeOfReplay = 0;
 
-    private MyGdxGame(AdsController adsController) {
-        this.adsController = adsController;
+    private MyGdxGame(IActivityRequestHandler IActivityRequestHandler) {
+        this.IActivityRequestHandler = IActivityRequestHandler;
     }
 
     private MyGdxGame() {
@@ -25,7 +29,7 @@ public class MyGdxGame extends Game {
     public static MyGdxGame getInstance() {
         if (instance == null) {
             instance = new MyGdxGame();
-            instance.adsController = new AdsController() {
+            instance.IActivityRequestHandler = new IActivityRequestHandler() {
                 @Override
                 public void showBannerAd() {
                     Gdx.app.log("ADS", "Do No Thing!");
@@ -41,31 +45,55 @@ public class MyGdxGame extends Game {
                     Gdx.app.log("ADS", "Do No Thing!");
                     return false;
                 }
+
+                @Override
+                public void showInterstitial() {
+
+                }
+
+                @Override
+                public void hideInterstitial() {
+
+                }
+
+                @Override
+                public void shareLink() {
+                }
+
             };
         }
         return instance;
     }
 
-    public AdsController getAdsController() {
-        return adsController;
+    public IActivityRequestHandler getIActivityRequestHandler() {
+        return IActivityRequestHandler;
     }
 
-    public static MyGdxGame getInstance(AdsController adsController) {
+    public static MyGdxGame getInstance(IActivityRequestHandler IActivityRequestHandler) {
         if (instance == null) {
-            instance = new MyGdxGame(adsController);
+            instance = new MyGdxGame(IActivityRequestHandler);
         }
         return instance;
     }
 
+    public int getTimeOfReplay() {
+        return timeOfReplay;
+    }
+
+    public void increaseTimeOfReplay() {
+        this.timeOfReplay++;
+    }
 
     public enum GameScreens {
+        LOADING,
+        COUNTDOWN,
         MENU,
         SETTING,
         END_GAME,
         GAME_PLAY
     }
 
-    private Screen loadingScreen, menuScreen, gameScreen, settingScreen, exitScreen;
+    private Screen loadingScreen, menuScreen, gameScreen, settingScreen, exitScreen, countDownScreen;
 
     @Override
     public void create() {
@@ -73,17 +101,24 @@ public class MyGdxGame extends Game {
             this.loadingScreen = new LoadScreen();
         }
         this.setScreen(this.loadingScreen);
-        this.adsController.showBannerAd();
+        this.IActivityRequestHandler.showBannerAd();
     }
 
     public void switchScreen(GameScreens screen) {
         Screen currentScreen;
         switch (screen) {
+            case COUNTDOWN:
+                if (this.countDownScreen != null) {
+                    this.countDownScreen.dispose();
+                }
+                currentScreen = new CountDownScreen();
+                this.IActivityRequestHandler.showBannerAd();
+                break;
             case MENU:
                 if (this.menuScreen == null)
                     this.menuScreen = new MenuScreen();
                 currentScreen = this.menuScreen;
-                this.adsController.showBannerAd();
+                this.IActivityRequestHandler.showBannerAd();
                 break;
             case SETTING:
                 if (this.settingScreen == null)
@@ -96,7 +131,7 @@ public class MyGdxGame extends Game {
                 currentScreen = this.exitScreen;
                 break;
             case GAME_PLAY:
-                this.adsController.hideBannerAd();
+                this.IActivityRequestHandler.hideBannerAd();
 
                 if (this.gameScreen != null)
                     this.gameScreen.dispose();
@@ -114,5 +149,12 @@ public class MyGdxGame extends Game {
     public void dispose() {
         super.dispose();
         instance = null;
+    }
+
+    public void exitApp() {
+        FBirdAssetManager.getInstance().dispose();
+        FontDefines.getInstance().dispose();
+        MyGdxGame.getInstance().dispose();
+        Gdx.app.exit();
     }
 }

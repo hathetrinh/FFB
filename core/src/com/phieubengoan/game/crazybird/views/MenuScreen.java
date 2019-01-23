@@ -17,7 +17,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Slider;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.Align;
-import com.badlogic.gdx.utils.viewport.FillViewport;
+import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.phieubengoan.game.crazybird.AppPreferences;
 import com.phieubengoan.game.crazybird.GameDefine;
 import com.phieubengoan.game.crazybird.MyGdxGame;
@@ -34,8 +34,9 @@ public class MenuScreen implements Screen {
     private float backgroundPosX = 0;
 
     public MenuScreen() {
-        camera = new OrthographicCamera();
-        stage = new Stage(new FillViewport(GameDefine.DEFAULT_SCREEN_WIDTH, GameDefine.DEFAULT_SCREEN_HEIGHT, camera));
+        camera = new OrthographicCamera(GameDefine.DEFAULT_SCREEN_WIDTH, GameDefine.DEFAULT_SCREEN_HEIGHT);
+        camera.position.set(GameDefine.DEFAULT_SCREEN_WIDTH / 2, GameDefine.DEFAULT_SCREEN_HEIGHT / 2, 10000);
+        stage = new Stage(new StretchViewport(GameDefine.DEFAULT_SCREEN_WIDTH, GameDefine.DEFAULT_SCREEN_HEIGHT, camera));
     }
 
     @Override
@@ -53,10 +54,10 @@ public class MenuScreen implements Screen {
 
         Table table = new Table(skin);
 
+        table.setSize(400, GameDefine.DEFAULT_SCREEN_HEIGHT);
         table.pad(GameDefine.DEFAULT_MENU_ELEMENT_PADDING).align(Align.center);
         table.setSize(GameDefine.DEFAULT_SCREEN_WIDTH, GameDefine.DEFAULT_SCREEN_HEIGHT);
         table.setDebug(GameDefine.DEBUG_MODE);
-        stage.addActor(table);
         table.add(new Label("SETTING", new Label.LabelStyle(myHeaderFont, Color.NAVY))).fillX().uniformX();
         table.row().pad(20, 0, 20, 0);
 
@@ -87,18 +88,45 @@ public class MenuScreen implements Screen {
         Label score = new Label(AppPreferences.getInstance().getMaxPoint() + "", new Label.LabelStyle(myHeaderFont, Color.RED));
         table.add(score);
 
+/*
+        table.row().pad(50, 0, 20, 0);
+
+        MyButton share = FBirdAssetManager.getInstance().getButtonShare();
+        table.add(share).size(50, 50);
+
+        share.addListener((event) -> {
+            Gdx.app.log(TAG, event.toString());
+            if (event.toString().equals(InputEvent.Type.touchDown.name())) {
+                MyGdxGame.getInstance().getIActivityRequestHandler().shareLink();
+            }
+            return false;
+        });
+
+        MyButton leaderBoard = FBirdAssetManager.getInstance().getButtonLeaderBoard();
+        table.add(leaderBoard).size(50, 50);
+        stage.addActor(table);
+        leaderBoard.addListener((event) -> {
+            Gdx.app.log(TAG, event.toString());
+            if (event.toString().equals(InputEvent.Type.touchDown.name())) {
+                MyGdxGame.getInstance().getIActivityRequestHandler().submitScore(100);
+            }
+            return false;
+        });
+*/
+
+
         table.row().pad(50, 0, 20, 0);
         MyButton play = FBirdAssetManager.getInstance().getButtonPlay();
-        table.add(play).size(50, 50);
+        table.add(play).size(87f, 87f);
 
         MyButton exit = FBirdAssetManager.getInstance().getButtonExit();
-        table.add(exit).size(50, 50);
+        table.add(exit).size(87f, 87f);
         stage.addActor(table);
 
         exit.addListener((event) -> {
             Gdx.app.log(TAG, event.toString());
             if (event.toString().equals(InputEvent.Type.touchDown.name())) {
-                exitApp();
+                MyGdxGame.getInstance().exitApp();
                 return false;
             }
             return false;
@@ -107,7 +135,7 @@ public class MenuScreen implements Screen {
         play.addListener((event) -> {
             Gdx.app.log(TAG, event.toString());
             if (event.toString().equals(InputEvent.Type.touchDown.name())) {
-                MyGdxGame.getInstance().switchScreen(MyGdxGame.GameScreens.GAME_PLAY);
+                MyGdxGame.getInstance().switchScreen(MyGdxGame.GameScreens.COUNTDOWN);
             }
             return false;
         });
@@ -129,8 +157,7 @@ public class MenuScreen implements Screen {
         }
 
         if (Gdx.input.isKeyPressed(Input.Keys.BACK)) {
-            FBirdAssetManager.getInstance().dispose();
-            Gdx.app.exit();
+            MyGdxGame.getInstance().exitApp();
         }
     }
 
@@ -161,9 +188,4 @@ public class MenuScreen implements Screen {
         background = null;
     }
 
-    public void exitApp() {
-        FBirdAssetManager.getInstance().dispose();
-        dispose();
-        Gdx.app.exit();
-    }
 }

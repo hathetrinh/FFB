@@ -4,48 +4,47 @@ import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.backends.gwt.GwtApplication;
 import com.badlogic.gdx.backends.gwt.GwtApplicationConfiguration;
 import com.phieubengoan.game.crazybird.MyGdxGame;
+import com.phieubengoan.game.crazybird.utils.IActivityRequestHandler;
 
-public class HtmlLauncher extends GwtApplication {
+public class HtmlLauncher extends GwtApplication implements IActivityRequestHandler {
 
-        // USE THIS CODE FOR A FIXED SIZE APPLICATION
-        @Override
-        public GwtApplicationConfiguration getConfig () {
-                return new GwtApplicationConfiguration(720, 1200);
-        }
-        // END CODE FOR FIXED SIZE APPLICATION
+    @Override
+    public GwtApplicationConfiguration getConfig() {
+        return new GwtApplicationConfiguration(720, 1200);
+    }
 
-        // UNCOMMENT THIS CODE FOR A RESIZABLE APPLICATION
-        // PADDING is to avoid scrolling in iframes, set to 20 if you have problems
-        // private static final int PADDING = 0;
-        // private GwtApplicationConfiguration cfg;
-        //
-        // @Override
-        // public GwtApplicationConfiguration getConfig() {
-        //     int w = Window.getClientWidth() - PADDING;
-        //     int h = Window.getClientHeight() - PADDING;
-        //     cfg = new GwtApplicationConfiguration(w, h);
-        //     Window.enableScrolling(false);
-        //     Window.setMargin("0");
-        //     Window.addResizeHandler(new ResizeListener());
-        //     cfg.preferFlash = false;
-        //     return cfg;
-        // }
-        //
-        // class ResizeListener implements ResizeHandler {
-        //     @Override
-        //     public void onResize(ResizeEvent event) {
-        //         int width = event.getWidth() - PADDING;
-        //         int height = event.getHeight() - PADDING;
-        //         getRootPanel().setWidth("" + width + "px");
-        //         getRootPanel().setHeight("" + height + "px");
-        //         getApplicationListener().resize(width, height);
-        //         Gdx.graphics.setWindowedMode(width, height);
-        //     }
-        // }
-        // END OF CODE FOR RESIZABLE APPLICATION
+    @Override
+    public ApplicationListener createApplicationListener() {
+        return MyGdxGame.getInstance();
+    }
 
-        @Override
-        public ApplicationListener createApplicationListener () {
-                return MyGdxGame.getInstance();
-        }
+    @Override
+    public void showBannerAd() {
+
+    }
+
+    @Override
+    public void hideBannerAd() {
+
+    }
+
+    @Override
+    public boolean isShown() {
+        return false;
+    }
+
+    @Override
+    public void showInterstitial() {
+
+    }
+
+    @Override
+    public void hideInterstitial() {
+
+    }
+
+    @Override
+    public void shareLink() {
+
+    }
 }

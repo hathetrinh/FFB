@@ -1,7 +1,3 @@
-/*
- * Copyright (c) 2018
- */
-
 package com.phieubengoan.game.crazybird.loader;
 
 import com.badlogic.gdx.assets.AssetManager;
@@ -13,12 +9,11 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.Disposable;
+import com.phieubengoan.game.crazybird.AppPreferences;
+import com.phieubengoan.game.crazybird.utils.MyButton;
 
 import java.util.HashMap;
 import java.util.Map;
-
-import com.phieubengoan.game.crazybird.AppPreferences;
-import com.phieubengoan.game.crazybird.utils.MyButton;
 
 public class FBirdAssetManager implements Disposable {
 
@@ -35,11 +30,13 @@ public class FBirdAssetManager implements Disposable {
 
     private Map<ANI_TYPES, Animation> animationMap = new HashMap<>();
 
-    private AnimationResource angelAnimationResource = new AnimationResource(ANI_TYPES.bird, "player", 2, "sprites", "crazy_angel", 1 / 2f);
+    private AnimationResource angelAnimationResource = new AnimationResource(ANI_TYPES.bird, "player", 4, "sprites", "crazy_angel", 1 / 4f);
     private AnimationResource attackerAnimationResource = new AnimationResource(ANI_TYPES.spaceship, "spaceship", 2, "sprites", "crazy_angel", 1 / 10f);
     private AnimationResource countDownAnimationResource = new AnimationResource(ANI_TYPES.countdown, "number", 3, "sprites", "crazy_angel", 1f);
     private AnimationResource coinAnimationResource = new AnimationResource(ANI_TYPES.coin, "coin3d", 6, "sprites", "crazy_angel", 1 / 2f);
-    private AnimationResource deadAnimationResource = new AnimationResource(ANI_TYPES.explosion, "explosion", 4, "sprites", "crazy_angel", 1f);
+    private AnimationResource deadAnimationResource = new AnimationResource(ANI_TYPES.explosion, "explosion", 4, "sprites", "crazy_angel", 1/4f);
+
+    private MyButton btnGPlay, btnExit, btnLeaderBoard, btnShare, btnGMenu, btnMenu, btnPlay, btnPause;
 
     private static final String GAME_TEXTURE_ITEMS = "sprites/crazy_angel.atlas";
 
@@ -132,6 +129,12 @@ public class FBirdAssetManager implements Disposable {
                         break;
                     case countdown:
                         animationResource = countDownAnimationResource;
+                        TextureRegion[] angelTexture = new TextureRegion[animationResource.numImage];
+                        int j = 0;
+                        for (int i = animationResource.numImage; i >0; i--) {
+                            angelTexture[j++] = assetManager.get("sprites/" + animationResource.atlasName, TextureAtlas.class).findRegion(animationResource.getImageName(i));
+                        }
+                        this.animationMap.put(type, new Animation(animationResource.time, angelTexture));
                         break;
                     case explosion:
                         animationResource = deadAnimationResource;
@@ -139,11 +142,13 @@ public class FBirdAssetManager implements Disposable {
                     default:
                         animationResource = angelAnimationResource;
                 }
-                TextureRegion[] angelTexture = new TextureRegion[animationResource.numImage];
-                for (int i = 0; i < animationResource.numImage; i++) {
-                    angelTexture[i] = assetManager.get("sprites/" + animationResource.atlasName, TextureAtlas.class).findRegion(animationResource.getImageName(i + 1));
+                if (type != ANI_TYPES.countdown) {
+                    TextureRegion[] angelTexture = new TextureRegion[animationResource.numImage];
+                    for (int i = 0; i < animationResource.numImage; i++) {
+                        angelTexture[i] = assetManager.get("sprites/" + animationResource.atlasName, TextureAtlas.class).findRegion(animationResource.getImageName(i + 1));
+                    }
+                    this.animationMap.put(type, new Animation(animationResource.time, angelTexture));
                 }
-                this.animationMap.put(type, new Animation(animationResource.time, angelTexture));
             }
         }
     }
@@ -199,26 +204,58 @@ public class FBirdAssetManager implements Disposable {
     }
 
     public MyButton getButtonPlay() {
-        return new MyButton(getTextureRegion("btn_play_normal"), getTextureRegion("btn_play_clicked"));
+        if (btnPlay == null) {
+            btnPlay = new MyButton(getTextureRegion("btn_play_clicked"), getTextureRegion("btn_play_clicked"));
+        }
+        return btnPlay;
     }
 
     public MyButton getButtonExit() {
-        return new MyButton(getTextureRegion("btn_exit_normal"), getTextureRegion("btn_exit_clicked"));
+        if (btnExit == null) {
+            btnExit = new MyButton(getTextureRegion("btn_exit_normal"), getTextureRegion("btn_exit_normal"));
+        }
+        return btnExit;
+    }
+
+    public MyButton getButtonLeaderBoard() {
+        if (btnLeaderBoard == null) {
+            btnLeaderBoard = new MyButton(getTextureRegion("btn_gameplay_normal"), getTextureRegion("btn_gameplay_clicked"));
+        }
+        return btnLeaderBoard;
+    }
+
+    public MyButton getButtonShare() {
+        if (btnShare == null) {
+            btnShare = new MyButton(getTextureRegion("btn_share_normal"), getTextureRegion("btn_share_clicked"));
+        }
+        return btnShare;
     }
 
     public MyButton getButtonMenu() {
-        return new MyButton(getTextureRegion("btn_menu_normal"), getTextureRegion("btn_menu_clicked"));
+        if (btnMenu == null) {
+            btnMenu = new MyButton(getTextureRegion("btn_menu_normal"), getTextureRegion("btn_menu_normal"));
+        }
+        return btnMenu;
     }
 
     public MyButton getButtonPause() {
-        return new MyButton(getTextureRegion("btn_pause_normal"), getTextureRegion("btn_pause_clicked"));
+        if (btnPause == null) {
+            btnPause = new MyButton(getTextureRegion("btn_pause_normal"), getTextureRegion("btn_pause_clicked"));
+        }
+        return btnPause;
     }
 
-    public MyButton getButtonMenuPlay() {
-        return new MyButton(getTextureRegion("btn_g_play_normal"), getTextureRegion("btn_g_play_clicked"));
+    public MyButton getButtonGPlay() {
+        if (btnGPlay == null) {
+            btnGPlay = new MyButton(getTextureRegion("btn_g_play_normal"), getTextureRegion("btn_g_play_normal"));
+        }
+        return btnGPlay;
     }
 
-    public MyButton getButtonMenuMenu() {
-        return new MyButton(getTextureRegion("btn_g_menu_normal"), getTextureRegion("btn_g_menu_clicked"));
+    public MyButton getButtonGMenu() {
+        if (btnGMenu == null) {
+            btnGMenu = new MyButton(getTextureRegion("btn_g_menu_normal"), getTextureRegion("btn_g_menu_normal"));
+        }
+        return btnGMenu;
     }
 }

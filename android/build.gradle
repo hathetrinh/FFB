@@ -18,10 +18,10 @@ android {
     }
     defaultConfig {
         applicationId "com.phieubengoan.game.crazybird.android"
-        minSdkVersion 14
+        minSdkVersion 15
         targetSdkVersion 28
-        versionCode 1
-        versionName "1.0"
+        versionCode 5
+        versionName "1.0.5"
     }
     buildTypes {
         release {

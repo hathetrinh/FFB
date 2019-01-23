@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
     <string name="app_name">Crazy Bird</string>
     <string name="facebook_app_id">221888485358302</string>
+    <string name="android_app_id">849624711303</string>
+    <string name="leaderboard_id">CgkIh4HRjN0YEAIQAA</string>
+    <string name="admob_id">ca-app-pub-9144720939293332~9947838139</string>
+    <!--<string name="admob_banner_unit">ca-app-pub-9144720939293332/1303061355</string>-->
+    <!--<string name="admob_interstitial_unit">ca-app-pub-9144720939293332/2136213562</string>-->
+    <string name="admob_interstitial_unit">ca-app-pub-3940256099942544/1033173712</string>
+    <string name="admob_banner_unit">ca-app-pub-3940256099942544/6300978111</string>
 </resources>

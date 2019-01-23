@@ -9,9 +9,10 @@ import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.Shape;
 import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.utils.Disposable;
 import com.phieubengoan.game.crazybird.entity.components.TransformationComponent;
 
-public class BodyFactory {
+public class BodyFactory implements Disposable {
 
     public static final int STEEL = 0;
     public static final int WOOD = 1;
@@ -20,6 +21,7 @@ public class BodyFactory {
     public static final int AIR = 4;
 
     public World world;
+
 
     public enum SHAPE {
         RECTANGLE,
@@ -152,5 +154,10 @@ public class BodyFactory {
         for (Fixture fix : body.getFixtureList()) {
             fix.setSensor(true);
         }
+    }
+
+    @Override
+    public void dispose() {
+        this.world.dispose();
     }
 }

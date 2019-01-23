@@ -25,5 +25,7 @@ public class FontDefines implements Disposable {
     @Override
     public void dispose() {
         this.fontMenuItem.dispose();
+        this.fontMenuTitle.dispose();
+        instance = null;
     }
 }

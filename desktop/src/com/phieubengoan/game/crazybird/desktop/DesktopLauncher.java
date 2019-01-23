@@ -7,8 +7,8 @@ import com.phieubengoan.game.crazybird.MyGdxGame;
 public class DesktopLauncher {
 	public static void main (String[] arg) {
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
-		config.width = 480;
-		config.height = 800;
+		config.width = 780;
+		config.height = 853;
 		config.title = "Trinh bro";
 		new LwjglApplication(MyGdxGame.getInstance(), config);
 	}

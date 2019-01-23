@@ -1,7 +1,3 @@
-/*
- * Copyright (c) 2018
- */
-
 package com.phieubengoan.game.crazybird.views;
 
 import com.badlogic.ashley.core.Entity;
@@ -20,11 +16,7 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import com.badlogic.gdx.utils.viewport.FillViewport;
-
-import java.util.ArrayList;
-import java.util.List;
-
+import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.phieubengoan.game.crazybird.AppPreferences;
 import com.phieubengoan.game.crazybird.GameDefine;
 import com.phieubengoan.game.crazybird.MyGdxGame;
@@ -47,6 +39,9 @@ import com.phieubengoan.game.crazybird.loader.FBirdAssetManager;
 import com.phieubengoan.game.crazybird.utils.BodyFactory;
 import com.phieubengoan.game.crazybird.utils.FFBContactListener;
 import com.phieubengoan.game.crazybird.utils.MyButton;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class GameScreen implements Screen {
 
@@ -103,12 +98,13 @@ public class GameScreen implements Screen {
         levelFactory.createPlatform(new Vector2(GameDefine.GAME_SCREEN_WIDTH, GameDefine.GAME_SCREEN_HEIGHT + 1));
         levelFactory.createPlatform(new Vector2(GameDefine.GAME_SCREEN_WIDTH, 1.0f));
 
-        stage = new Stage(new FillViewport(GameDefine.GAME_SCREEN_WIDTH, GameDefine.GAME_SCREEN_HEIGHT, camera));
+        stage = new Stage(new StretchViewport(GameDefine.GAME_SCREEN_WIDTH, GameDefine.GAME_SCREEN_HEIGHT, camera));
         createInGameMenu();
     }
 
     @Override
     public void show() {
+
         this.btnMenu.addListener(new ClickListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
@@ -122,7 +118,12 @@ public class GameScreen implements Screen {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
                 engine.removeAllEntities();
-                MyGdxGame.getInstance().switchScreen(MyGdxGame.GameScreens.GAME_PLAY);
+                btnReplay.remove();
+                btnPause.remove();
+                btnMenu.remove();
+                MyGdxGame.getInstance().switchScreen(MyGdxGame.GameScreens.COUNTDOWN);
+                MyGdxGame.getInstance().increaseTimeOfReplay();
+                MyGdxGame.getInstance().getIActivityRequestHandler().hideInterstitial();
                 return super.touchDown(event, x, y, pointer, button);
             }
         });
@@ -145,7 +146,11 @@ public class GameScreen implements Screen {
         Gdx.gl.glTexParameterf(GL20.GL_TEXTURE_2D, GL20.GL_TEXTURE_WRAP_S, GL20.GL_CLAMP_TO_EDGE);
 
         renderer.render(world, camera.combined);
-        engine.update(delta);
+        engine.update(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
+        if (Gdx.input.isKeyPressed(Input.Keys.BACK)) {
+            MyGdxGame.getInstance().exitApp();
+            return;
+        }
 
         PlayerComponent player = this.player.getComponent(PlayerComponent.class);
         if (player == null || (player.isDead && player.isGround) || this.isPause) {
@@ -155,6 +160,9 @@ public class GameScreen implements Screen {
             if (currentMax < point) {
                 AppPreferences.getInstance().setMaxPoint(point);
             }
+            if (MyGdxGame.getInstance().getTimeOfReplay() % 10 == 0) {
+                MyGdxGame.getInstance().getIActivityRequestHandler().showInterstitial();
+            }
         } else {
             world.step(1 / 60f, 6, 2);
             this.point = player.point;
@@ -162,10 +170,6 @@ public class GameScreen implements Screen {
             Gdx.input.setInputProcessor(controller);
         }
 
-        if (Gdx.input.isKeyPressed(Input.Keys.BACK)) {
-            FBirdAssetManager.getInstance().dispose();
-            Gdx.app.exit();
-        }
     }
 
     public void renderInGameMenu(Boolean needRender) {
@@ -178,9 +182,6 @@ public class GameScreen implements Screen {
         }
 
         if (needRender) {
-            if (!MyGdxGame.getInstance().getAdsController().isShown()) {
-                MyGdxGame.getInstance().getAdsController().showBannerAd();
-            }
             btnMenu.draw(spriteBatch, 1);
             if (isPause) {
                 btnPause.draw(spriteBatch, 1);
@@ -189,13 +190,9 @@ public class GameScreen implements Screen {
                 gameOver.draw(spriteBatch, 1);
                 btnReplay.draw(spriteBatch, 1);
                 this.stage.addActor(btnReplay);
-            }
-        } else {
-            if (MyGdxGame.getInstance().getAdsController().isShown()) {
-                MyGdxGame.getInstance().getAdsController().hideBannerAd();
+
             }
         }
-
         spriteBatch.end();
     }
 
@@ -256,5 +253,6 @@ public class GameScreen implements Screen {
         world.dispose();
         spriteBatch.dispose();
         engine.clearPools();
+        camera = null;
     }
 }
